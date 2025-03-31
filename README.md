@@ -100,6 +100,21 @@ ninja check-polygeist-opt && ninja check-cgeist
 `ninja check-polygeist-opt` runs the tests in `Polygeist/test/polygeist-opt`
 `ninja check-cgeist` runs the tests in `Polygeist/tools/cgeist/Test`
 
+# MLIR Docs Generation
+```
+cd build
+
+ninja mlir-doc
+
+docs
+├── HLIDialect.md
+├── HLIOps.md
+├── Polygeist
+│   ├── PolygeistDialect.md
+│   └── PolygeistOps.md
+└── PolygeistPasses.md
+```
+
 # Citing Polygeist
 
 If you use Polygeist, please consider citing the relevant publications:
