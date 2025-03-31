@@ -4,3 +4,5 @@ add_subdirectory(cgeist)
 if(POLYGEIST_ENABLE_POLYMER)
   add_subdirectory(polymer)
 endif()
+
+add_subdirectory(mlir-toy)
