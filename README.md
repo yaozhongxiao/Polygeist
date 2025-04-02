@@ -115,6 +115,22 @@ docs
 └── PolygeistPasses.md
 ```
 
+# hli --convert-affine-to-hli pass
+```
+./tools/mlir-toy/toy-opt ../test/mlir-toy/hli.ops.mlir --convert-affine-to-hli
+
+Run ConvertAffineToHLIPass On Operation
+
+module {
+  func.func @test(%arg0: i32, %arg1: i32) -> i32 {
+    %0 = arith.addi %arg0, %arg1 : i32
+    %1 = hli.add %arg0, %arg1 : i32, i32 -> i32
+    %2 = hli.sub %0, %1 : i32, i32 -> i32
+    return %2 : i32
+  }
+}
+```
+
 # Citing Polygeist
 
 If you use Polygeist, please consider citing the relevant publications:

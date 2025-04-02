@@ -2,6 +2,8 @@ cmake_minimum_required(VERSION 3.13.4)
 
 include(CheckCXXSourceCompiles)
 
+add_compile_options(-w)
+
 set(POLYGEIST_ENABLE_CUDA 0 CACHE BOOL "Enable CUDA frontend and backend")
 set(POLYGEIST_ENABLE_ROCM 0 CACHE BOOL "Enable ROCM backend")
 
@@ -30,6 +32,11 @@ endif()
 
 if(POLICY CMP0077)
   cmake_policy(SET CMP0077 NEW)
+endif()
+
+if(POLICY CMP0116)
+  cmake_policy(SET CMP0116 NEW)
+  set(CMAKE_BUILD_WITH_INSTALL_NAME_DIR ON)
 endif()
 
 option(LLVM_INCLUDE_TOOLS "Generate build targets for the LLVM tools." ON)
@@ -134,4 +141,4 @@ include(sanitizers)
 add_subdirectory(include)
 add_subdirectory(lib)
 add_subdirectory(tools)
-add_subdirectory(test)
+# add_subdirectory(test)

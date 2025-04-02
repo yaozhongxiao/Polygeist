@@ -6,7 +6,6 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON) # 生成 compile_commands.json 便于代�
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED YES)
 
-find_package(MLIR REQUIRED CONFIG)
 list(APPEND CMAKE_MODULE_PATH "${MLIR_CMAKE_DIR}")
 list(APPEND CMAKE_MODULE_PATH "${LLVM_CMAKE_DIR}")
 
@@ -26,21 +25,21 @@ target_link_libraries(mlir-printer
 )
 install(TARGETS mlir-printer RUNTIME DESTINATION bin)
 
-add_mlir_tool(toy-opt toy-opt.cpp PARTIAL_SOURCES_INTENDED)
-target_link_libraries(toy-opt PUBLIC HLI
-  MLIRIR MLIRParser MLIRSupport
-  MLIROptLib
-  MLIRFuncDialect
-  MLIRTransforms
-  MLIRArithDialect
-)
-
-# add_executable(toy-opt toy-opt.cpp)
-# target_link_libraries(toy-opt HLI
+# add_mlir_tool(toy-opt toy-opt.cpp PARTIAL_SOURCES_INTENDED)
+# target_link_libraries(toy-opt PUBLIC HLI HLITransforms
 #   MLIRIR MLIRParser MLIRSupport
 #   MLIROptLib
 #   MLIRFuncDialect
 #   MLIRTransforms
 #   MLIRArithDialect
 # )
+
+add_executable(toy-opt toy-opt.cpp)
+target_link_libraries(toy-opt HLI HLITransforms
+  MLIRIR MLIRParser MLIRSupport
+  MLIROptLib
+  MLIRFuncDialect
+  MLIRTransforms
+  MLIRArithDialect
+)
 install(TARGETS toy-opt RUNTIME DESTINATION bin)

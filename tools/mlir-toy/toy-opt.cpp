@@ -17,6 +17,7 @@
 #include "mlir/Dialect/Func/IR/FuncOps.h"
 #include "mlir/Transforms/Passes.h"
 #include "HLI/HLIDialect.h"
+#include "HLI/Passes/Passes.h"
 
 using namespace mlir;
 using namespace llvm;
@@ -28,5 +29,7 @@ int main(int argc, char **argv) {
   // register optimization Pass
   registerCSEPass();
   registerCanonicalizerPass();
+
+  hli::registerHLIPasses();
   return asMainReturnCode(MlirOptMain(argc, argv, "toy-opt", registry));
 }
