@@ -131,51 +131,40 @@ module {
 }
 ```
 
-# Citing Polygeist
+# hli --hli-dce pass
+```
+./tools/mlir-toy/toy-opt ../test/mlir-toy/hli.ops.mlir --hli-dce -debug-only="hli-dce"
 
-If you use Polygeist, please consider citing the relevant publications:
+// hli.ops.mlir
+func.func @test(%a: i32, %b: i32) -> i32 {
+  %c = arith.addi %a, %b : i32
+  %d = hli.add %a, %b : i32, i32 -> i32
+  %f = hli.vadd %a, %b : i32, i32 -> i32
+  %e = hli.sub %c, %d : i32, i32 -> i32
+  hli.return %e : i32
+}
 
-``` bibtex
-@inproceedings{polygeistPACT,
-  title = {Polygeist: Raising C to Polyhedral MLIR},
-  author = {Moses, William S. and Chelini, Lorenzo and Zhao, Ruizhe and Zinenko, Oleksandr},
-  booktitle = {Proceedings of the ACM International Conference on Parallel Architectures and Compilation Techniques},
-  numpages = {12},
-  location = {Virtual Event},
-  series = {PACT '21},
-  publisher = {Association for Computing Machinery},
-  year = {2021},
-  address = {New York, NY, USA},
-  keywords = {Polygeist, MLIR, Polyhedral, LLVM, Compiler, C++, Pluto, Polly, OpenScop, Parallel, OpenMP, Affine, Raising, Transformation, Splitting, Automatic-Parallelization, Reduction, Polybench},
+Run HLIDECPass On Operation
+
+Used Operations:
+[1]hli.return %3 : i32
+[2]%0 = arith.addi %arg0, %arg1 : i32
+[3]%3 = hli.sub %0, %1 : i32, i32 -> i32
+[4]%1 = hli.add %arg0, %arg1 : i32, i32 -> i32
+----------------
+
+[1] dead operation: %2 = hli.vadd %arg0, %arg1 : i32, i32 -> i32
+dead Operations:
+[1]%2 = hli.vadd %arg0, %arg1 : i32, i32 -> i32
+----------------
+
+module {
+  func.func @test(%arg0: i32, %arg1: i32) -> i32 {
+    %0 = arith.addi %arg0, %arg1 : i32
+    %1 = hli.add %arg0, %arg1 : i32, i32 -> i32
+    %2 = hli.sub %0, %1 : i32, i32 -> i32
+    hli.return %2 : i32
+  }
 }
-@inproceedings{10.1145/3572848.3577475,
-  author = {Moses, William S. and Ivanov, Ivan R. and Domke, Jens and Endo, Toshio and Doerfert, Johannes and Zinenko, Oleksandr},
-  title = {High-Performance GPU-to-CPU Transpilation and Optimization via High-Level Parallel Constructs},
-  year = {2023},
-  isbn = {9798400700156},
-  publisher = {Association for Computing Machinery},
-  address = {New York, NY, USA},
-  url = {https://doi.org/10.1145/3572848.3577475},
-  doi = {10.1145/3572848.3577475},
-  booktitle = {Proceedings of the 28th ACM SIGPLAN Annual Symposium on Principles and Practice of Parallel Programming},
-  pages = {119–134},
-  numpages = {16},
-  keywords = {MLIR, polygeist, CUDA, barrier synchronization},
-  location = {Montreal, QC, Canada},
-  series = {PPoPP '23}
-}
-@inproceedings{10444828,
-  author = {Ivanov, Ivan R. and Zinenko, Oleksandr and Domke, Jens and Endo, Toshio and Moses, William S.},
-  booktitle = {2024 IEEE/ACM International Symposium on Code Generation and Optimization (CGO)},
-  title = {Retargeting and Respecializing GPU Workloads for Performance Portability},
-  year = {2024},
-  volume = {},
-  issn = {},
-  pages = {119-132},
-  doi = {10.1109/CGO57630.2024.10444828},
-  url = {https://doi.ieeecomputersociety.org/10.1109/CGO57630.2024.10444828},
-  publisher = {IEEE Computer Society},
-  address = {Los Alamitos, CA, USA},
-  month = {mar}
-}
+
 ```
