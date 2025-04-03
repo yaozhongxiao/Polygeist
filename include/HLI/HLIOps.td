@@ -1,10 +1,11 @@
-include "mlir/IR/OpBase.td"
-include "HLI/HLIDialect.td"
-include "mlir/Interfaces/SideEffectInterfaces.td"
-include "mlir/Interfaces/ControlFlowInterfaces.td"
-
 #ifndef HLI_OPS
 #define HLI_OPS
+
+include "mlir/IR/OpBase.td"
+include "HLI/HLIDialect.td"
+include "HLI/HLITypes.td"
+include "mlir/Interfaces/SideEffectInterfaces.td"
+include "mlir/Interfaces/ControlFlowInterfaces.td"
 
 // mnemonic op-name
 class HliOp<string mnemonic, list<Trait> traits = []> :
@@ -25,8 +26,9 @@ def AddOp : HliOp<"add", [Pure]> {
 
 def ConstantOp : HliOp<"const", [Pure]> {
   let summary = "const operation";
-  let arguments = (ins APIntAttr:$value);
-  let results = (outs AnyInteger:$result);
+  let arguments = (ins SI32Attr:$value);
+  let results = (outs HLIInteger:$result);
+  let assemblyFormat = "$value attr-dict `:` type($result)";
 }
 
 def SubOp : HliOp<"sub", [Pure]> {

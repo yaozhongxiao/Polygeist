@@ -27,6 +27,11 @@ struct ConvertArithToHLIPass
     : impl::ConvertArithToHLIBase<ConvertArithToHLIPass> {
   using impl::ConvertArithToHLIBase<
       ConvertArithToHLIPass>::ConvertArithToHLIBase;
+
+  void getDependentDialects(::mlir::DialectRegistry &registry) const override {
+    registry.insert<::mlir::arith::ArithDialect>();
+  }
+
   void runOnOperation() {
     llvm::errs() << "Run ConvertArithToHLIPass On Operation" << "\n";
     ::mlir::ConversionTarget target(getContext());

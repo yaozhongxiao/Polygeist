@@ -1,6 +1,6 @@
 add_subdirectory(Transforms)
 
-add_mlir_library(HLI HLIDialect.cpp HLIOps.cpp
+add_mlir_library(HLI HLIDialect.cpp HLIOps.cpp HLITypes.cpp
   DEPENDS mlir-headers
 )
 target_link_directories(HLI PUBLIC HLITransforms)
