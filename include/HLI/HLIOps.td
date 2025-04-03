@@ -16,6 +16,11 @@ def AddOp : HliOp<"add", [Pure]> {
   let arguments = (ins AnyInteger:$lhs, AnyInteger:$rhs);
   let results = (outs AnyInteger:$result);
   let assemblyFormat = "$lhs `,` $rhs attr-dict `:` type($lhs) `,` type($rhs) `->` type($result)";
+  // let builders = [
+  //   OpBuilder<(ins "::mlir::Value":$lhs, "::mlir::Value":$rhs), [{
+  //     build($_builder, $_state, lhs.getType(), lhs.getType(), lhs, rhs);
+  //   }]>
+  // ];
 }
 
 def ConstantOp : HliOp<"const", [Pure]> {

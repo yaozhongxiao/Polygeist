@@ -8,6 +8,7 @@ namespace hli {
 
 std::unique_ptr<::mlir::Pass> createConvertAffineToHLIPass();
 std::unique_ptr<::mlir::Pass> createHLIDCEPass();
+std::unique_ptr<::mlir::Pass> createConvertArithToHLIPass();
 
 #define GEN_PASS_REGISTRATION
 #include "HLI/Passes/HLIPasses.h.inc"

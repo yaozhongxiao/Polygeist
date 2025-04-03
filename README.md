@@ -168,3 +168,30 @@ module {
 }
 
 ```
+
+# hli --convert-arith-to-hli
+```
+./tools/mlir-toy/toy-opt ../test/mlir-toy/hli.ops.mlir -convert-arith-to-hli
+
+// hli.ops.mlir
+func.func @test(%a: i32, %b: i32) -> i32 {
+  %c = arith.addi %a, %b : i32
+  %d = hli.add %a, %b : i32, i32 -> i32
+  %f = hli.vadd %a, %b : i32, i32 -> i32
+  %e = hli.sub %c, %d : i32, i32 -> i32
+  hli.return %e : i32
+}
+
+Run ConvertArithToHLIPass On Operation
+
+module {
+  func.func @test(%arg0: i32, %arg1: i32) -> i32 {
+    %0 = hli.add %arg0, %arg1 : i32, i32 -> i32
+    %1 = hli.add %arg0, %arg1 : i32, i32 -> i32
+    %2 = hli.vadd %arg0, %arg1 : i32, i32 -> i32
+    %3 = hli.sub %0, %1 : i32, i32 -> i32
+    hli.return %3 : i32
+  }
+}
+
+```
