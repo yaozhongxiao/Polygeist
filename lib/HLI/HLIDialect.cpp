@@ -3,6 +3,7 @@
 #include "HLI/HLIDialect.cpp.inc"
 #include "HLI/HLITypes.h"
 #include "mlir/IR/DialectImplementation.h"
+#include "HLI/Interfaces/TypeInferInterface.h"
 
 #define GET_TYPEDEF_CLASSES
 #include "HLI/HLITypes.cpp.inc"

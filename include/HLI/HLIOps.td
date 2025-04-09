@@ -4,6 +4,8 @@
 include "mlir/IR/OpBase.td"
 include "HLI/HLIDialect.td"
 include "HLI/HLITypes.td"
+include "HLI/Interfaces/TypeInferInterface.td"
+include "mlir/IR/Interfaces.td"
 include "mlir/Interfaces/SideEffectInterfaces.td"
 include "mlir/Interfaces/ControlFlowInterfaces.td"
 
@@ -22,6 +24,7 @@ def AddOp : HliOp<"add", [Pure]> {
   //     build($_builder, $_state, lhs.getType(), lhs.getType(), lhs, rhs);
   //   }]>
   // ];
+  let hasCanonicalizer = true;
 }
 
 def ConstantOp : HliOp<"const", [Pure]> {
@@ -39,7 +42,7 @@ def SubOp : HliOp<"sub", [Pure]> {
   let hasVerifier = true;
 }
 
-def VAddOp : HliOp<"vadd", [Pure]> {
+def VAddOp : HliOp<"vadd", [Pure, DeclareOpInterfaceMethods<TypeInferInterface, ["nonStaticMethodWithParams"]>]> {
   let summary = "vadd operation";
   let arguments = (ins Variadic<AnyInteger>:$inputs);
   let results = (outs AnyInteger:$result);

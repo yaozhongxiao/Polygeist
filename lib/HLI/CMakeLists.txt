@@ -1,3 +1,4 @@
+add_subdirectory(Interfaces)
 add_subdirectory(Transforms)
 
 add_mlir_library(HLI HLIDialect.cpp HLIOps.cpp HLITypes.cpp

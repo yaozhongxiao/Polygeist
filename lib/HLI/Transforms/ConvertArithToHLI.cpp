@@ -4,6 +4,7 @@
 #include "mlir/IR/PatternMatch.h"
 #include "mlir/Support/LogicalResult.h"
 #include "llvm/Support/raw_ostream.h"
+#include "HLI/Interfaces/TypeInferInterface.h"
 #include <memory>
 
 namespace hli {
@@ -33,6 +34,23 @@ struct ConvertArithToHLIPass
   }
 
   void runOnOperation() {
+    llvm::dbgs() << "runOnOperation" << "\n";
+    getOperation()->dump();
+    getOperation()->walk([&](hli::VAddOp op) { 
+      llvm::dbgs() << "VAddOp: " << *op << "\n";
+      mlir::Operation *addOperation = op.getOperation();
+      op.nonStaticMethod();
+      op.staticMethod();
+
+      if(auto typeInfer = llvm::dyn_cast<TypeInferInterface>(addOperation)) {
+        llvm::dbgs() << "typeInfer: " << *typeInfer << "\n";
+        typeInfer.nonStaticMethod();
+        typeInfer.staticMethod();
+      } else {
+        llvm::errs() << "VAddOp: " << *op << " does not implement TypeInferInterface\n";
+      }
+     });
+
     llvm::errs() << "Run ConvertArithToHLIPass On Operation" << "\n";
     ::mlir::ConversionTarget target(getContext());
     target.addLegalDialect<hli::HLIDialect>();

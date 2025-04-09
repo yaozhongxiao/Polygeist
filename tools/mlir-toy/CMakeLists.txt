@@ -35,7 +35,7 @@ install(TARGETS mlir-printer RUNTIME DESTINATION bin)
 # )
 
 add_executable(toy-opt toy-opt.cpp)
-target_link_libraries(toy-opt HLI HLITransforms
+target_link_libraries(toy-opt HLI HLITransforms HLIInterface
   MLIRIR MLIRParser MLIRSupport
   MLIROptLib
   MLIRFuncDialect

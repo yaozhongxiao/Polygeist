@@ -1,3 +1,4 @@
+add_subdirectory(Interfaces)
 add_subdirectory(Passes)
 
 add_mlir_dialect(HLI hli)
